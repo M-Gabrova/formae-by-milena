@@ -5,9 +5,9 @@
 - [x] Replace luxury-villa visuals with approachable mid-range apartment interiors.
 - [x] Create a favicon from the supplied brand artwork.
 - [x] Verify desktop and mobile layouts, language switching, and portfolio filtering.
-- [ ] Add the supplied testimonial names.
-- [ ] Add the original logo to the header and Amsterdam One accents.
-- [ ] Animate the four process steps with soft transitions.
-- [ ] Refine the bedroom image with layered curtains and no cabinet below the window.
-- [ ] Strengthen bilingual SEO wording and metadata.
-- [ ] Verify the refinements on desktop and mobile.
+- [x] Add the supplied testimonial names.
+- [x] Add the original logo to the header and Amsterdam One accents.
+- [x] Animate the four process steps with soft transitions.
+- [x] Refine the bedroom image with layered curtains and no cabinet below the window.
+- [x] Strengthen bilingual SEO wording and metadata.
+- [x] Verify the refinements on desktop and mobile.
