@@ -20,7 +20,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import beigeLogo from "@/assets/beige-logo.png.asset.json";
-import lightLogo from "@/assets/formae-light-logo.png.asset.json";
 import heroImage from "@/assets/formae-hero-apartment.jpg";
 import kitchenImage from "@/assets/formae-kitchen-apartment.jpg";
 import bedroomImage from "@/assets/formae-bedroom-apartment.jpg";
@@ -279,7 +278,7 @@ function Index() {
 
       <footer className="bg-footer px-5 py-12 text-footer-foreground sm:px-8 lg:px-12">
         <div className="mx-auto grid max-w-[1440px] gap-10 md:grid-cols-[1fr_auto] md:items-end">
-          <div><img src={lightLogo.url} alt="FORMAE by Milena" width={768} height={768} loading="lazy" className="w-36" /><p className="mt-3 text-xs uppercase tracking-[0.25em] text-footer-foreground/55">Design Your Life</p></div>
+          <div><img src={beigeLogo.url} alt="FORMAE by Milena" width={500} height={500} loading="lazy" className="w-36" /><p className="mt-3 text-xs uppercase tracking-[0.25em] text-footer-foreground/55">Design Your Life</p></div>
           <div className="space-y-2 text-sm text-footer-foreground/65 md:text-right"><a href="tel:+359883522459" className="block hover:text-footer-foreground">088 352 2459</a><a href="mailto:formae.by.milena@gmail.com" className="block hover:text-footer-foreground">formae.by.milena@gmail.com</a><p className="pt-4 text-xs">© {new Date().getFullYear()} FORMAE by Milena</p></div>
         </div>
       </footer>
