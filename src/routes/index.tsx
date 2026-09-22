@@ -22,8 +22,9 @@ import { Button } from "@/components/ui/button";
 import beigeLogo from "@/assets/beige-logo.png.asset.json";
 import heroImage from "@/assets/formae-hero-apartment.jpg";
 import kitchenImage from "@/assets/formae-kitchen-apartment.jpg";
-import bedroomImage from "@/assets/formae-bedroom-apartment.jpg";
+import bedroomImage from "@/assets/formae-bedroom-apartment-updated.jpg";
 import bathroomImage from "@/assets/formae-bathroom-apartment.jpg";
+import headerLogo from "@/assets/formae-light-logo.png.asset.json";
 
 type Language = "bg" | "en";
 type Copy = { bg: string; en: string };
@@ -82,13 +83,41 @@ const filters = [
   { key: "home", label: { bg: "Цялостни проекти", en: "Full Home Concepts" } },
 ];
 
+const testimonials = [
+  {
+    quote: {
+      bg: "Милена превърна идеите ни в ясна концепция и ни спести много колебания по време на ремонта.",
+      en: "Milena turned our ideas into a clear concept and saved us many difficult decisions during renovation.",
+    },
+    name: "Петя и Ивайло",
+    location: { bg: "София", en: "Sofia" },
+  },
+  {
+    quote: {
+      bg: "Визуализациите ни помогнаха да видим всяко решение и да планираме бюджета си уверено.",
+      en: "The visualizations helped us see every decision and plan our budget with confidence.",
+    },
+    name: "Петър",
+    location: { bg: "Велико Търново", en: "Veliko Tarnovo" },
+  },
+  {
+    quote: {
+      bg: "Прецизен процес, чудесна комуникация и дом, който наистина се усеща като наш.",
+      en: "A precise process, excellent communication, and a home that truly feels like ours.",
+    },
+    name: "Диляна",
+    location: { bg: "Плевен", en: "Pleven" },
+  },
+];
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "FORMAE by Milena | Interior Design & 3D Visualization" },
-      { name: "description", content: "Interior concepts, 2D planning and photorealistic 3D visualization by Milena Gabrova." },
-      { property: "og:title", content: "FORMAE by Milena — Design Your Life" },
-      { property: "og:description", content: "See your home before you start creating it with thoughtful planning and realistic visualization." },
+      { title: "Интериорен дизайн и 3D визуализации | FORMAE by Milena" },
+      { name: "description", content: "Интериорен дизайн, 2D разпределения и фотореалистични 3D визуализации за апартаменти в София и България от FORMAE by Milena." },
+      { name: "keywords", content: "интериорен дизайн, 3D визуализации, 2D разпределение, дизайн на апартамент, интериорен дизайнер София, interior design Bulgaria, 3D visualization Sofia" },
+      { property: "og:title", content: "FORMAE by Milena | Интериорен дизайн и 3D визуализации" },
+      { property: "og:description", content: "Вижте своя дом предварително с интериорна концепция, функционално 2D планиране и реалистична 3D визуализация." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -120,8 +149,7 @@ function Index() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-hero-foreground/15 bg-hero/90 text-hero-foreground backdrop-blur-md">
         <div className="mx-auto grid h-20 max-w-[1440px] grid-cols-[minmax(0,1fr)_auto] items-center px-5 sm:px-8 lg:grid-cols-[auto_1fr_auto] lg:px-12">
           <button onClick={() => goTo("home")} className="w-fit" aria-label="FORMAE home">
-            <span className="block font-display text-2xl tracking-[0.14em]">FORMAE</span>
-            <span className="block text-[9px] uppercase tracking-[0.32em] text-hero-foreground/70">by Milena</span>
+            <img src={headerLogo.url} alt="FORMAE by Milena" width={500} height={500} className="h-14 w-24 object-contain object-left sm:w-28" />
           </button>
           <nav className="mx-auto hidden items-center gap-8 lg:flex" aria-label="Main navigation">
             {nav.map(([id, label]) => (
@@ -156,7 +184,7 @@ function Index() {
         <div className="relative mx-auto flex min-h-[92svh] max-w-[1440px] items-end px-5 pb-16 pt-36 sm:px-8 sm:pb-20 lg:px-12 lg:pb-24">
           <div className="max-w-4xl">
             <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.26em] text-hero-foreground/75"><span className="h-px w-10 bg-sage" /> Interior design · 2D · 3D</p>
-            <h1 className="max-w-4xl font-display text-5xl leading-[1.06] sm:text-6xl lg:text-7xl xl:text-8xl">
+             <h1 className="max-w-4xl font-accent text-5xl leading-[1.06] sm:text-6xl lg:text-7xl xl:text-8xl">
               {language === "bg" ? "Виж дома си, преди да започнеш да го създаваш." : "See your home before you start creating it."}
             </h1>
             <p className="mt-7 max-w-2xl text-base leading-7 text-hero-foreground/78 sm:text-lg">
@@ -177,7 +205,7 @@ function Index() {
         <div className="section-grid">
           <div>
             <p className="eyebrow">01 — {language === "bg" ? "За FORMAE" : "About FORMAE"}</p>
-            <h2 className="section-title mt-6">{language === "bg" ? "Идеята става пространство." : "An idea becomes a space."}</h2>
+             <h2 className="section-title mt-6"><span className="font-accent">{language === "bg" ? "Идеята става пространство." : "An idea becomes a space."}</span></h2>
           </div>
           <div className="lg:pt-14">
             <p className="text-xl leading-9 text-foreground/85 sm:text-2xl">
@@ -213,8 +241,8 @@ function Index() {
           <p className="eyebrow text-sage-light">03 — {language === "bg" ? "Как работим" : "Our Process"}</p>
           <h2 className="section-title mt-5 max-w-3xl">{language === "bg" ? "Четири стъпки. Една ясна посока." : "Four steps. One clear direction."}</h2>
           <div className="mt-16 grid md:grid-cols-4">
-            {[{bg:"Консултация",en:"Consultation"},{bg:"Създаване на концепция",en:"Concept Creation"},{bg:"2D планиране",en:"2D Planning"},{bg:"3D визуализация",en:"3D Visualization"}].map((step,index) => (
-              <div key={step.en} className="process-step"><div className="mb-8 flex items-center"><span className="grid size-10 place-items-center rounded-full border border-sage text-xs text-sage-light">{index + 1}</span><div className="h-px flex-1 bg-hero-foreground/20" /></div><h3 className="font-display text-2xl">{t(step, language)}</h3><p className="mt-3 text-sm leading-6 text-hero-foreground/55">{language === "bg" ? ["Опознаваме вас, пространството и приоритетите ви.","Определяме стил, атмосфера, цветове и материали.","Подреждаме функциите и мебелите с точност.","Виждате бъдещия си дом преди реализацията."][index] : ["We understand you, your space, and your priorities.","We define the style, atmosphere, colors, and materials.","We arrange function and furniture with precision.","You see your future home before implementation."][index]}</p></div>
+             {[{bg:"Консултация",en:"Consultation"},{bg:"Създаване на концепция",en:"Concept Creation"},{bg:"2D планиране",en:"2D Planning"},{bg:"3D визуализация",en:"3D Visualization"}].map((step,index) => (
+               <div key={step.en} className={`process-step process-reveal process-delay-${index + 1}`}><div className="mb-8 flex items-center"><span className="grid size-10 place-items-center rounded-full border border-sage text-xs text-sage-light transition-colors duration-500 hover:bg-sage hover:text-primary-foreground">{index + 1}</span><div className="h-px flex-1 origin-left bg-hero-foreground/20 transition-transform duration-700" /></div><h3 className="font-display text-2xl">{t(step, language)}</h3><p className="mt-3 text-sm leading-6 text-hero-foreground/55">{language === "bg" ? ["Опознаваме вас, пространството и приоритетите ви.","Определяме стил, атмосфера, цветове и материали.","Подреждаме функциите и мебелите с точност.","Виждате бъдещия си дом преди реализацията."][index] : ["We understand you, your space, and your priorities.","We define the style, atmosphere, colors, and materials.","We arrange function and furniture with precision.","You see your future home before implementation."][index]}</p></div>
             ))}
           </div>
         </div>
@@ -242,7 +270,7 @@ function Index() {
       <section className="relative overflow-hidden bg-sage py-24 text-primary-foreground sm:py-32">
         <div className="absolute -right-20 -top-20 size-96 rounded-full border border-primary-foreground/15" /><div className="absolute -right-5 top-10 size-72 rounded-full border border-primary-foreground/15" />
         <div className="content-wrap relative grid items-center gap-12 lg:grid-cols-[1fr_260px]">
-          <blockquote className="max-w-4xl font-display text-4xl leading-tight sm:text-5xl lg:text-6xl">“{language === "bg" ? "Красотата е в детайлите. А детайлите никога не са случайни." : "Beauty is found in the details. And details are never left to chance."}”</blockquote>
+           <blockquote className="max-w-4xl font-accent text-4xl leading-tight sm:text-5xl lg:text-6xl">“{language === "bg" ? "Красотата е в детайлите. А детайлите никога не са случайни." : "Beauty is found in the details. And details are never left to chance."}”</blockquote>
           <img src={beigeLogo.url} alt="FORMAE by Milena" width={500} height={500} loading="lazy" className="mx-auto w-48 opacity-90 lg:w-64" />
         </div>
       </section>
@@ -251,7 +279,7 @@ function Index() {
         <div className="content-wrap">
           <p className="eyebrow">05 — {language === "bg" ? "Отзиви" : "Testimonials"}</p><h2 className="section-title mt-5">{language === "bg" ? "Доверието се изгражда в процеса." : "Trust is built in the process."}</h2>
           <div className="mt-12 grid gap-px bg-border md:grid-cols-3">
-            {[0,1,2].map((item) => <article key={item} className="bg-background p-8 sm:p-10"><p className="font-display text-5xl text-sage/50">“</p><p className="mt-6 text-base leading-7 text-foreground/80">{language === "bg" ? ["Милена превърна идеите ни в ясна концепция и ни спести много колебания по време на ремонта.","Визуализациите ни помогнаха да видим всяко решение и да планираме бюджета си уверено.","Прецизен процес, чудесна комуникация и дом, който наистина се усеща като наш."][item] : ["Milena turned our ideas into a clear concept and saved us many difficult decisions during renovation.","The visualizations helped us see every decision and plan our budget with confidence.","A precise process, excellent communication, and a home that truly feels like ours."][item]}</p><div className="mt-8 border-t border-border pt-5"><p className="text-sm font-medium">{language === "bg" ? "Клиент на FORMAE" : "FORMAE Client"}</p><p className="mt-1 text-xs text-muted-foreground">{language === "bg" ? "Име за добавяне" : "Name to be added"}</p></div></article>)}
+             {testimonials.map((testimonial) => <article key={testimonial.name} className="bg-background p-8 sm:p-10"><p className="font-accent text-5xl text-sage/50">“</p><p className="mt-6 text-base leading-7 text-foreground/80">{t(testimonial.quote, language)}</p><div className="mt-8 border-t border-border pt-5"><p className="text-sm font-medium">{testimonial.name}</p><p className="mt-1 text-xs text-muted-foreground">{t(testimonial.location, language)}</p></div></article>)}
           </div>
         </div>
       </section>
