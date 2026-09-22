@@ -2,8 +2,8 @@
 
 ## Experience
 - Build one polished, single-page portfolio experience with sticky section navigation and a BG/EN language switcher.
-- Lead with a full-width interior image, concise positioning, and direct contact and portfolio actions.
-- Keep the visual language architectural and editorial: warm light canvas, espresso type, sage accents, restrained motion, and generous spacing.
+- Lead with a full-width image of a stylish, attainable apartment interior, concise positioning, and direct contact and portfolio actions.
+- Keep the visual language architectural and editorial: warm light canvas, espresso type, sage accents, restrained motion, and generous spacing. Imagery should feature realistic mid-range apartments rather than luxury villas or extravagant homes.
 
 ## Sections
 1. Hero with bilingual headline, introduction, and two actions.
