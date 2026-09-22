@@ -10,4 +10,4 @@
 - [x] Animate the four process steps with soft transitions.
 - [x] Refine the bedroom image with layered curtains and no cabinet below the window.
 - [x] Strengthen bilingual SEO wording and metadata.
-- [ ] Verify the refinements on desktop and mobile.
+- [x] Verify the refinements on desktop and mobile.
