@@ -24,7 +24,7 @@ import heroImage from "@/assets/formae-hero-apartment.jpg";
 import kitchenImage from "@/assets/formae-kitchen-apartment.jpg";
 import bedroomImage from "@/assets/formae-bedroom-apartment-updated.jpg";
 import bathroomImage from "@/assets/formae-bathroom-apartment.jpg";
-import headerLogo from "@/assets/formae-light-logo.png.asset.json";
+import headerLogo from "@/assets/formae-beige-tight.png.asset.json";
 
 type Language = "bg" | "en";
 type Copy = { bg: string; en: string };
@@ -149,7 +149,7 @@ function Index() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-hero-foreground/15 bg-hero/90 text-hero-foreground backdrop-blur-md">
         <div className="mx-auto grid h-20 max-w-[1440px] grid-cols-[minmax(0,1fr)_auto] items-center px-5 sm:px-8 lg:grid-cols-[auto_1fr_auto] lg:px-12">
           <button onClick={() => goTo("home")} className="w-fit" aria-label="FORMAE home">
-            <img src={headerLogo.url} alt="FORMAE by Milena" width={500} height={500} className="h-14 w-24 object-contain object-left sm:w-28" />
+            <img src={headerLogo.url} alt="FORMAE by Milena" width={392} height={320} className="h-16 w-24 object-contain object-left sm:h-[4.5rem] sm:w-28" />
           </button>
           <nav className="mx-auto hidden items-center gap-8 lg:flex" aria-label="Main navigation">
             {nav.map(([id, label]) => (
