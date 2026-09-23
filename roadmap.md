@@ -12,3 +12,6 @@
 - [x] Strengthen bilingual SEO wording and metadata.
 - [x] Verify the refinements on desktop and mobile.
 - [x] Replace the header logo and favicon with the tightly cropped transparent artwork.
+- [x] Add a handwritten Cyrillic fallback for Amsterdam One accents.
+- [x] Replace the process animation with a reliable soft scroll reveal.
+- [x] Rework the services section with a cohesive image for every service.

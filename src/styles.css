@@ -7,7 +7,7 @@
 @theme inline {
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Antic", ui-sans-serif, sans-serif;
-  --font-accent: "Amsterdam One", "Antic", ui-sans-serif, sans-serif;
+  --font-accent: "Amsterdam One", "Marck Script", "Antic", cursive;
   --radius-sm: calc(var(--radius) - 2px);
   --radius-md: var(--radius);
   --radius-lg: calc(var(--radius) + 2px);
@@ -96,11 +96,20 @@
 @utility nav-link { transition: color 180ms ease; &:hover { color: var(--color-hero-foreground); } }
 @utility process-step { padding-right: 1.5rem; padding-bottom: 2.5rem; }
 @utility font-accent { font-family: var(--font-accent); }
-@utility process-reveal { animation: process-reveal 850ms cubic-bezier(0.22, 1, 0.36, 1) both; animation-timeline: view(); animation-range: entry 5% cover 28%; }
-@utility process-delay-1 { animation-delay: 0ms; }
-@utility process-delay-2 { animation-delay: 90ms; }
-@utility process-delay-3 { animation-delay: 180ms; }
-@utility process-delay-4 { animation-delay: 270ms; }
+@utility process-reveal {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  & .process-line { transform: scaleX(0); transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1) 180ms; }
+  & .process-number { transform: scale(0.86); transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), background-color 400ms ease, color 400ms ease; }
+  &[data-visible="true"] { opacity: 1; transform: translateY(0); }
+  &[data-visible="true"] .process-line { transform: scaleX(1); }
+  &[data-visible="true"] .process-number { transform: scale(1); }
+}
+@utility process-delay-1 { transition-delay: 0ms; }
+@utility process-delay-2 { transition-delay: 120ms; }
+@utility process-delay-3 { transition-delay: 240ms; }
+@utility process-delay-4 { transition-delay: 360ms; }
 @utility project-card { position: relative; overflow: hidden; min-height: 20rem; background: var(--color-muted); }
 @utility contact-float { display: grid; width: 3rem; height: 3rem; place-items: center; border-radius: 999px; color: var(--color-primary-foreground); box-shadow: 0 8px 24px oklch(0.15 0.02 48 / 0.22); transition: transform 180ms ease; & svg { width: 1.15rem; height: 1.15rem; } &:hover { transform: translateY(-2px); } }
 
@@ -113,9 +122,6 @@
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-}
-
-@keyframes process-reveal {
-  from { opacity: 0; transform: translateY(1.25rem); }
-  to { opacity: 1; transform: translateY(0); }
+  .process-reveal { opacity: 1; transform: none; }
+  .process-reveal .process-line, .process-reveal .process-number { transform: none; }
 }

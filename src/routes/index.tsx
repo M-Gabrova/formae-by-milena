@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -25,6 +25,10 @@ import kitchenImage from "@/assets/formae-kitchen-apartment.jpg";
 import bedroomImage from "@/assets/formae-bedroom-apartment-updated.jpg";
 import bathroomImage from "@/assets/formae-bathroom-apartment.jpg";
 import headerLogo from "@/assets/formae-beige-tight.png.asset.json";
+import conceptsImage from "@/assets/service-interior-concepts.jpg";
+import planningImage from "@/assets/service-2d-planning.jpg";
+import visualizationImage from "@/assets/service-3d-visualization.jpg";
+import materialsImage from "@/assets/service-materials-style.jpg";
 
 type Language = "bg" | "en";
 type Copy = { bg: string; en: string };
@@ -39,6 +43,7 @@ const services = [
       bg: "Персонализирани дизайн концепции, съобразени с вашия начин на живот и пространство.",
       en: "Personalized design concepts tailored to your lifestyle and space.",
     },
+    image: conceptsImage,
   },
   {
     icon: Ruler,
@@ -47,6 +52,7 @@ const services = [
       bg: "Функционално планиране на помещенията и оптимално разположение на мебелите.",
       en: "Functional room planning and optimized furniture placement.",
     },
+    image: planningImage,
   },
   {
     icon: Layers3,
@@ -55,6 +61,7 @@ const services = [
       bg: "Фотореалистични визуализации, с които виждате крайния резултат преди реализацията.",
       en: "Photorealistic visualizations that reveal the final result before implementation.",
     },
+    image: visualizationImage,
     featured: true,
   },
   {
@@ -64,6 +71,7 @@ const services = [
       bg: "Насоки за цветове, материали, текстури и избор на мебели.",
       en: "Guidance for colors, materials, textures, and furniture direction.",
     },
+    image: materialsImage,
   },
 ];
 
@@ -130,6 +138,26 @@ function Index() {
   const [language, setLanguage] = useState<Language>("bg");
   const [filter, setFilter] = useState("all");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [processVisible, setProcessVisible] = useState(false);
+  const processRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = processRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setProcessVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.18 },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   const nav = [
     ["about", { bg: "За нас", en: "About" }],
@@ -225,24 +253,31 @@ function Index() {
       <section id="services" className="section-space bg-surface">
         <div className="content-wrap">
           <div className="section-heading"><div><p className="eyebrow">02 — {language === "bg" ? "Услуги" : "Services"}</p><h2 className="section-title mt-5">{language === "bg" ? "От първата линия до ясната картина." : "From the first line to the full picture."}</h2></div><p className="max-w-md text-sm leading-7 text-muted-foreground">{language === "bg" ? "Процес, който дава увереност преди всяка инвестиция в ремонт, материали и обзавеждане." : "A process that gives you confidence before every investment in renovation, materials, and furniture."}</p></div>
-          <div className="mt-14 grid border-l border-t border-border md:grid-cols-2 xl:grid-cols-4">
+           <div className="mt-14 grid gap-px bg-border md:grid-cols-2">
             {services.map((service, index) => { const Icon = service.icon; return (
-              <article key={service.title.en} className={`group relative min-h-80 border-b border-r border-border p-7 transition-colors duration-500 ${service.featured ? "bg-primary text-primary-foreground" : "bg-background hover:bg-secondary"}`}>
-                <div className="flex items-start justify-between"><span className={`text-xs ${service.featured ? "text-primary-foreground/60" : "text-muted-foreground"}`}>0{index + 1}</span><Icon className="size-7 stroke-[1.3]" /></div>
-                <div className="absolute inset-x-7 bottom-8"><h3 className="font-display text-3xl leading-tight">{t(service.title, language)}</h3><p className={`mt-4 text-sm leading-6 ${service.featured ? "text-primary-foreground/70" : "text-muted-foreground"}`}>{t(service.description, language)}</p></div>
+               <article key={service.title.en} className={`group relative overflow-hidden ${service.featured ? "bg-primary text-primary-foreground" : "bg-background"}`}>
+                 <div className="relative aspect-[16/10] overflow-hidden">
+                   <img src={service.image} alt={t(service.title, language)} width={1200} height={900} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]" />
+                   <div className="absolute inset-0 bg-project-overlay opacity-30 transition-opacity duration-500 group-hover:opacity-50" />
+                   <span className="absolute left-6 top-6 grid size-10 place-items-center bg-background/90 text-xs text-foreground backdrop-blur-sm">0{index + 1}</span>
+                 </div>
+                 <div className="grid min-h-52 grid-cols-[1fr_auto] gap-6 p-7 sm:p-8">
+                   <div><h3 className="font-display text-3xl leading-tight sm:text-4xl">{t(service.title, language)}</h3><p className={`mt-4 max-w-lg text-sm leading-6 ${service.featured ? "text-primary-foreground/75" : "text-muted-foreground"}`}>{t(service.description, language)}</p></div>
+                   <Icon className={`mt-1 size-7 stroke-[1.3] ${service.featured ? "text-primary-foreground" : "text-sage"}`} />
+                 </div>
               </article>
             ); })}
           </div>
         </div>
       </section>
 
-      <section id="process" className="section-space bg-espresso text-hero-foreground">
+       <section id="process" ref={processRef} className="section-space bg-espresso text-hero-foreground">
         <div className="content-wrap">
           <p className="eyebrow text-sage-light">03 — {language === "bg" ? "Как работим" : "Our Process"}</p>
           <h2 className="section-title mt-5 max-w-3xl">{language === "bg" ? "Четири стъпки. Една ясна посока." : "Four steps. One clear direction."}</h2>
           <div className="mt-16 grid md:grid-cols-4">
              {[{bg:"Консултация",en:"Consultation"},{bg:"Създаване на концепция",en:"Concept Creation"},{bg:"2D планиране",en:"2D Planning"},{bg:"3D визуализация",en:"3D Visualization"}].map((step,index) => (
-               <div key={step.en} className={`process-step process-reveal process-delay-${index + 1}`}><div className="mb-8 flex items-center"><span className="grid size-10 place-items-center rounded-full border border-sage text-xs text-sage-light transition-colors duration-500 hover:bg-sage hover:text-primary-foreground">{index + 1}</span><div className="h-px flex-1 origin-left bg-hero-foreground/20 transition-transform duration-700" /></div><h3 className="font-display text-2xl">{t(step, language)}</h3><p className="mt-3 text-sm leading-6 text-hero-foreground/55">{language === "bg" ? ["Опознаваме вас, пространството и приоритетите ви.","Определяме стил, атмосфера, цветове и материали.","Подреждаме функциите и мебелите с точност.","Виждате бъдещия си дом преди реализацията."][index] : ["We understand you, your space, and your priorities.","We define the style, atmosphere, colors, and materials.","We arrange function and furniture with precision.","You see your future home before implementation."][index]}</p></div>
+               <div key={step.en} data-visible={processVisible} className={`process-step process-reveal process-delay-${index + 1}`}><div className="mb-8 flex items-center"><span className="process-number grid size-10 place-items-center rounded-full border border-sage text-xs text-sage-light">{index + 1}</span><div className="process-line h-px flex-1 origin-left bg-hero-foreground/20" /></div><h3 className="font-display text-2xl">{t(step, language)}</h3><p className="mt-3 text-sm leading-6 text-hero-foreground/55">{language === "bg" ? ["Опознаваме вас, пространството и приоритетите ви.","Определяме стил, атмосфера, цветове и материали.","Подреждаме функциите и мебелите с точност.","Виждате бъдещия си дом преди реализацията."][index] : ["We understand you, your space, and your priorities.","We define the style, atmosphere, colors, and materials.","We arrange function and furniture with precision.","You see your future home before implementation."][index]}</p></div>
             ))}
           </div>
         </div>
