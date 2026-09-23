@@ -11,3 +11,4 @@
 - [x] Refine the bedroom image with layered curtains and no cabinet below the window.
 - [x] Strengthen bilingual SEO wording and metadata.
 - [x] Verify the refinements on desktop and mobile.
+- [x] Replace the header logo and favicon with the tightly cropped transparent artwork.
