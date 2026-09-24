@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -44,6 +44,7 @@ const services = [
       en: "Personalized design concepts tailored to your lifestyle and space.",
     },
     image: conceptsImage,
+    featured: true,
   },
   {
     icon: Ruler,
@@ -139,20 +140,36 @@ function Index() {
   const [filter, setFilter] = useState("all");
   const [menuOpen, setMenuOpen] = useState(false);
   const [processVisible, setProcessVisible] = useState(false);
-  const processRef = useRef<HTMLElement>(null);
+  const [activeStep, setActiveStep] = useState(-1);
+  const processRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const section = processRef.current;
-    if (!section) return;
+    const steps = processRef.current;
+    if (!steps) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => setProcessVisible(Boolean(entry?.isIntersecting)),
-      { threshold: 0.28, rootMargin: "0px 0px -12% 0px" },
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setProcessVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4, rootMargin: "0px 0px -20% 0px" },
     );
 
-    observer.observe(section);
+    observer.observe(steps);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (!processVisible) return;
+    const startDelay = window.setTimeout(() => setActiveStep(0), 1400);
+    const cycle = window.setInterval(() => setActiveStep((prev) => (prev + 1) % 4), 1400);
+    return () => {
+      window.clearTimeout(startDelay);
+      window.clearInterval(cycle);
+    };
+  }, [processVisible]);
 
   const nav = [
     ["about", { bg: "За нас", en: "About" }],
@@ -251,10 +268,14 @@ function Index() {
            <div className="mt-14 grid gap-px bg-border md:grid-cols-2">
             {services.map((service, index) => { const Icon = service.icon; return (
                <article key={service.title.en} className={`group relative overflow-hidden ${service.featured ? "bg-primary text-primary-foreground" : "bg-background"}`}>
-                 <div className="relative aspect-[16/10] overflow-hidden">
-                   <img src={service.image} alt={t(service.title, language)} width={1200} height={900} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]" />
-                   <div className="absolute inset-0 bg-project-overlay opacity-30 transition-opacity duration-500 group-hover:opacity-50" />
-                   <span className="absolute left-6 top-6 grid size-10 place-items-center bg-background/90 text-xs text-foreground backdrop-blur-sm">0{index + 1}</span>
+                 <div className="p-7 pb-0 sm:p-8 sm:pb-0">
+                   <div className={`relative aspect-[16/10] overflow-hidden border p-2 sm:p-2.5 ${service.featured ? "border-primary-foreground/25 bg-primary-foreground/10" : "border-border bg-surface"}`}>
+                     <div className="relative h-full w-full overflow-hidden">
+                       <img src={service.image} alt={t(service.title, language)} width={1200} height={900} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]" />
+                       <div className="absolute inset-0 bg-project-overlay opacity-30 transition-opacity duration-500 group-hover:opacity-50" />
+                       <span className="absolute left-5 top-5 grid size-10 place-items-center bg-background/90 text-xs text-foreground backdrop-blur-sm">0{index + 1}</span>
+                     </div>
+                   </div>
                  </div>
                  <div className="grid min-h-52 grid-cols-[1fr_auto] gap-6 p-7 sm:p-8">
                    <div><h3 className="font-display text-3xl leading-tight sm:text-4xl">{t(service.title, language)}</h3><p className={`mt-4 max-w-lg text-sm leading-6 ${service.featured ? "text-primary-foreground/75" : "text-muted-foreground"}`}>{t(service.description, language)}</p></div>
@@ -266,13 +287,14 @@ function Index() {
         </div>
       </section>
 
-       <section id="process" ref={processRef} className="section-space bg-espresso text-hero-foreground">
+       <section id="process" className="section-space bg-espresso text-hero-foreground">
         <div className="content-wrap">
           <p className="eyebrow text-sage-light">03 — {language === "bg" ? "Как работим" : "Our Process"}</p>
           <h2 className="section-title mt-5 max-w-3xl">{language === "bg" ? "Четири стъпки. Една ясна посока." : "Four steps. One clear direction."}</h2>
-          <div className="mt-16 grid md:grid-cols-4">
+          <div ref={processRef} className="mt-16 grid md:grid-cols-4">
              {[{bg:"Консултация",en:"Consultation"},{bg:"Създаване на концепция",en:"Concept Creation"},{bg:"2D планиране",en:"2D Planning"},{bg:"3D визуализация",en:"3D Visualization"}].map((step,index) => (
-               <div key={step.en} data-visible={processVisible} className={`process-step process-reveal process-delay-${index + 1}`}><div className="mb-8 flex items-center"><span className="process-number grid size-14 shrink-0 place-items-center rounded-full bg-sage font-display text-xl text-primary-foreground shadow-sm">{index + 1}</span><div className="process-line h-px flex-1 origin-left bg-sage/55" /></div><h3 className="font-display text-2xl">{t(step, language)}</h3><p className="mt-3 text-sm leading-6 text-hero-foreground/55">{language === "bg" ? ["Опознаваме вас, пространството и приоритетите ви.","Определяме стил, атмосфера, цветове и материали.","Подреждаме функциите и мебелите с точност.","Виждате бъдещия си дом преди реализацията."][index] : ["We understand you, your space, and your priorities.","We define the style, atmosphere, colors, and materials.","We arrange function and furniture with precision.","You see your future home before implementation."][index]}</p></div>
+               <div key={step.en} data-visible={processVisible} data-active={activeStep === index} style={{ transitionDelay: `${index * 320}ms`, "--step-delay": `${index * 320}ms` } as CSSProperties} className="process-step process-reveal"><div className="mb-8 flex items-center"><span className="process-number grid size-14 shrink-0 place-items-center rounded-full bg-sage font-display text-xl text-primary-foreground shadow-sm" style={{ transitionDelay: activeStep === index ? "0ms" : `${index * 320}ms` }}>{index + 1}</span><div className="process-line h-px flex-1 origin-left bg-sage/55" /></div><h3 className="font-display text-2xl">{t(step, language)}</h3><p className="mt-3 text-sm leading-6 text-hero-foreground/55">{language === "bg" ? ["Опознаваме вас, пространството и приоритетите ви.","Определяме стил, атмосфера, цветове и материали.","Подреждаме функциите и мебелите с точност.","Виждате бъдещия си дом преди реализацията."][index] : ["We understand you, your space, and your priorities.","We define the style, atmosphere, colors, and materials.","We arrange function and furniture with precision.","You see your future home before implementation."][index]}</p></div>
+
             ))}
           </div>
         </div>
