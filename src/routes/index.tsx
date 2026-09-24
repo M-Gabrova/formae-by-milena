@@ -252,10 +252,14 @@ function Index() {
            <div className="mt-14 grid gap-px bg-border md:grid-cols-2">
             {services.map((service, index) => { const Icon = service.icon; return (
                <article key={service.title.en} className={`group relative overflow-hidden ${service.featured ? "bg-primary text-primary-foreground" : "bg-background"}`}>
-                 <div className="relative aspect-[16/10] overflow-hidden">
-                   <img src={service.image} alt={t(service.title, language)} width={1200} height={900} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]" />
-                   <div className="absolute inset-0 bg-project-overlay opacity-30 transition-opacity duration-500 group-hover:opacity-50" />
-                   <span className="absolute left-6 top-6 grid size-10 place-items-center bg-background/90 text-xs text-foreground backdrop-blur-sm">0{index + 1}</span>
+                 <div className="p-7 pb-0 sm:p-8 sm:pb-0">
+                   <div className={`relative aspect-[16/10] overflow-hidden border p-2 sm:p-2.5 ${service.featured ? "border-primary-foreground/25 bg-primary-foreground/10" : "border-border bg-surface"}`}>
+                     <div className="relative h-full w-full overflow-hidden">
+                       <img src={service.image} alt={t(service.title, language)} width={1200} height={900} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]" />
+                       <div className="absolute inset-0 bg-project-overlay opacity-30 transition-opacity duration-500 group-hover:opacity-50" />
+                       <span className="absolute left-5 top-5 grid size-10 place-items-center bg-background/90 text-xs text-foreground backdrop-blur-sm">0{index + 1}</span>
+                     </div>
+                   </div>
                  </div>
                  <div className="grid min-h-52 grid-cols-[1fr_auto] gap-6 p-7 sm:p-8">
                    <div><h3 className="font-display text-3xl leading-tight sm:text-4xl">{t(service.title, language)}</h3><p className={`mt-4 max-w-lg text-sm leading-6 ${service.featured ? "text-primary-foreground/75" : "text-muted-foreground"}`}>{t(service.description, language)}</p></div>
