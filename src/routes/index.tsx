@@ -44,6 +44,7 @@ const services = [
       en: "Personalized design concepts tailored to your lifestyle and space.",
     },
     image: conceptsImage,
+    featured: true,
   },
   {
     icon: Ruler,
