@@ -16,3 +16,5 @@
 - [x] Replace the process animation with a reliable soft scroll reveal.
 - [x] Rework the services section with a cohesive image for every service.
 - [x] Switch handwritten accents to Great Vibes and strengthen the process reveal with larger sage numbers.
+- [x] Frame the services photos with inner padding and give Interior Concepts the sage background.
+- [x] Reveal the four process steps one after another when the cards scroll into view, with a gentle accent cycle.
