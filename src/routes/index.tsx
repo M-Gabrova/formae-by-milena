@@ -140,20 +140,36 @@ function Index() {
   const [filter, setFilter] = useState("all");
   const [menuOpen, setMenuOpen] = useState(false);
   const [processVisible, setProcessVisible] = useState(false);
-  const processRef = useRef<HTMLElement>(null);
+  const [activeStep, setActiveStep] = useState(-1);
+  const processRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const section = processRef.current;
-    if (!section) return;
+    const steps = processRef.current;
+    if (!steps) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => setProcessVisible(Boolean(entry?.isIntersecting)),
-      { threshold: 0.28, rootMargin: "0px 0px -12% 0px" },
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setProcessVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4, rootMargin: "0px 0px -20% 0px" },
     );
 
-    observer.observe(section);
+    observer.observe(steps);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (!processVisible) return;
+    const startDelay = window.setTimeout(() => setActiveStep(0), 1400);
+    const cycle = window.setInterval(() => setActiveStep((prev) => (prev + 1) % 4), 1400);
+    return () => {
+      window.clearTimeout(startDelay);
+      window.clearInterval(cycle);
+    };
+  }, [processVisible]);
 
   const nav = [
     ["about", { bg: "За нас", en: "About" }],
