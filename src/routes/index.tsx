@@ -189,7 +189,7 @@ function Index() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-hero-foreground/15 bg-hero/90 text-hero-foreground backdrop-blur-md">
         <div className="mx-auto grid h-20 max-w-[1440px] grid-cols-[minmax(0,1fr)_auto] items-center px-5 sm:px-8 lg:grid-cols-[auto_1fr_auto] lg:px-12">
           <button onClick={() => goTo("home")} className="w-fit" aria-label="FORMAE home">
-            <img src={headerLogo.url} alt="FORMAE by Milena" width={392} height={320} className="h-16 w-24 object-contain object-left sm:h-[4.5rem] sm:w-28" />
+            <img src={headerLogo} alt="FORMAE by Milena" width={392} height={320} className="h-16 w-24 object-contain object-left sm:h-[4.5rem] sm:w-28" />
           </button>
           <nav className="mx-auto hidden items-center gap-8 lg:flex" aria-label="Main navigation">
             {nav.map(([id, label]) => (
@@ -323,7 +323,7 @@ function Index() {
         <div className="absolute -right-20 -top-20 size-96 rounded-full border border-primary-foreground/15" /><div className="absolute -right-5 top-10 size-72 rounded-full border border-primary-foreground/15" />
         <div className="content-wrap relative grid items-center gap-12 lg:grid-cols-[1fr_260px]">
            <blockquote className="max-w-4xl font-accent text-4xl leading-tight sm:text-5xl lg:text-6xl">“{language === "bg" ? "Красотата е в детайлите. А детайлите никога не са случайни." : "Beauty is found in the details. And details are never left to chance."}”</blockquote>
-          <img src={beigeLogo.url} alt="FORMAE by Milena" width={500} height={500} loading="lazy" className="mx-auto w-48 opacity-90 lg:w-64" />
+          <img src={beigeLogo} alt="FORMAE by Milena" width={500} height={500} loading="lazy" className="mx-auto w-48 opacity-90 lg:w-64" />
         </div>
       </section>
 
@@ -358,7 +358,7 @@ function Index() {
 
       <footer className="bg-footer px-5 py-12 text-footer-foreground sm:px-8 lg:px-12">
         <div className="mx-auto grid max-w-[1440px] gap-10 md:grid-cols-[1fr_auto] md:items-end">
-          <div><img src={beigeLogo.url} alt="FORMAE by Milena" width={500} height={500} loading="lazy" className="w-36" /><p className="mt-3 text-xs uppercase tracking-[0.25em] text-footer-foreground/55">Design Your Life</p></div>
+          <div><img src={beigeLogo} alt="FORMAE by Milena" width={500} height={500} loading="lazy" className="w-36" /><p className="mt-3 text-xs uppercase tracking-[0.25em] text-footer-foreground/55">Design Your Life</p></div>
           <div className="space-y-2 text-sm text-footer-foreground/65 md:text-right"><a href="tel:+359883522459" className="block hover:text-footer-foreground">088 352 2459</a><a href="mailto:formae.by.milena@gmail.com" className="block hover:text-footer-foreground">formae.by.milena@gmail.com</a><p className="pt-4 text-xs">© {new Date().getFullYear()} FORMAE by Milena</p></div>
         </div>
       </footer>
