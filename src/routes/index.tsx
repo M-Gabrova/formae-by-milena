@@ -19,12 +19,12 @@ import {
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import beigeLogo from "@/assets/beige-logo.png.asset.json";
+import beigeLogo from "@/assets/beige-logo.png";
 import heroImage from "@/assets/formae-hero-apartment.jpg";
 import kitchenImage from "@/assets/formae-kitchen-apartment.jpg";
 import bedroomImage from "@/assets/formae-bedroom-apartment-updated.jpg";
 import bathroomImage from "@/assets/formae-bathroom-apartment.jpg";
-import headerLogo from "@/assets/formae-beige-tight.png.asset.json";
+import headerLogo from "@/assets/formae-beige-tight.png";
 import conceptsImage from "@/assets/service-interior-concepts.jpg";
 import planningImage from "@/assets/service-2d-planning.jpg";
 import visualizationImage from "@/assets/service-3d-visualization.jpg";
