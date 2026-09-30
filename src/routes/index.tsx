@@ -347,7 +347,6 @@ function Index() {
           <div className="border-t border-hero-foreground/15 bg-hero-foreground/5 px-5 py-16 sm:px-10 lg:border-l lg:border-t-0 lg:px-16 lg:py-24">
             <p className="font-display text-2xl">Milena Gabrova</p><p className="mt-1 text-xs uppercase tracking-[0.15em] text-hero-foreground/50">Interior Designer & Visualization Specialist</p>
             <div className="mt-10 divide-y divide-hero-foreground/15 border-y border-hero-foreground/15">
-              <ContactLink icon={Phone} label={language === "bg" ? "Телефон" : "Phone"} value="088 352 2459" href="tel:+359883522459" />
               <ContactLink icon={Mail} label="Email" value="formae.by.milena@gmail.com" href="mailto:formae.by.milena@gmail.com" />
               <ContactLink icon={Instagram} label="Instagram" value="@formae.by.milena" href="https://www.instagram.com/formae.by.milena" />
               <ContactLink icon={Facebook} label="Facebook" value="FORMAE by Milena" href="https://www.facebook.com/FORMAE.by.Milena" />
@@ -359,7 +358,7 @@ function Index() {
       <footer className="bg-footer px-5 py-12 text-footer-foreground sm:px-8 lg:px-12">
         <div className="mx-auto grid max-w-[1440px] gap-10 md:grid-cols-[1fr_auto] md:items-end">
           <div><img src={beigeLogo} alt="FORMAE by Milena" width={500} height={500} loading="lazy" className="w-36" /><p className="mt-3 text-xs uppercase tracking-[0.25em] text-footer-foreground/55">Design Your Life</p></div>
-          <div className="space-y-2 text-sm text-footer-foreground/65 md:text-right"><a href="tel:+359883522459" className="block hover:text-footer-foreground">088 352 2459</a><a href="mailto:formae.by.milena@gmail.com" className="block hover:text-footer-foreground">formae.by.milena@gmail.com</a><p className="pt-4 text-xs">© {new Date().getFullYear()} FORMAE by Milena</p></div>
+          <div className="space-y-2 text-sm text-footer-foreground/65 md:text-right"><a href="mailto:formae.by.milena@gmail.com" className="block hover:text-footer-foreground">formae.by.milena@gmail.com</a><p className="pt-4 text-xs">© {new Date().getFullYear()} FORMAE by Milena</p></div>
         </div>
       </footer>
 
