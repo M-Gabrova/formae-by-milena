@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/admin_/login")({
-  ssr: false,
   head: () => ({
     meta: [
       { title: "Admin login | FORMAE by Milena" },
