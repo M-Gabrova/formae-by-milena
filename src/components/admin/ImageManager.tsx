@@ -45,7 +45,7 @@ export function ImageManager({ projectId }: { projectId: string }) {
     setPending((p) => [...p, ...items]);
     let ok = 0;
     await Promise.all(valid.map(async (file, idx) => {
-      const k = items[idx].key;
+      const k = items[idx]!.key;
       const path = buildImagePath(projectId, file.name);
       const myOrder = order++;
       try {
@@ -89,7 +89,7 @@ export function ImageManager({ projectId }: { projectId: string }) {
     const list = [...(images.data ?? [])];
     const j = index + dir;
     if (j < 0 || j >= list.length) return;
-    [list[index], list[j]] = [list[j], list[index]];
+    [list[index], list[j]] = [list[j]!, list[index]!];
     setBusy(true);
     try {
       const results = await Promise.all(list.map((img, i) =>
@@ -106,7 +106,7 @@ export function ImageManager({ projectId }: { projectId: string }) {
 
   async function saveCaption(img: ProjectImage, field: "caption_bg" | "caption_en", value: string) {
     if ((img[field] ?? "") === value) return;
-    const { error } = await supabase.from("project_images").update({ [field]: value.trim() || null }).eq("id", img.id);
+    const { error } = await supabase.from("project_images").update(field === "caption_bg" ? { caption_bg: value.trim() || null } : { caption_en: value.trim() || null }).eq("id", img.id);
     if (error) toast.error(friendlyError(error));
     else { toast.success("Надписът е запазен / Caption saved"); refresh(); }
   }

@@ -51,7 +51,7 @@ function ProjectList() {
       const list = [...(projects.data ?? [])];
       const j = index + dir;
       if (j < 0 || j >= list.length) return;
-      [list[index], list[j]] = [list[j], list[index]];
+      [list[index], list[j]] = [list[j]!, list[index]!];
       const results = await Promise.all(
         list.map((p, i) => (p.display_order === i ? null : supabase.from("projects").update({ display_order: i }).eq("id", p.id))),
       );

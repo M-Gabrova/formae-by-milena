@@ -101,7 +101,7 @@ export function ProjectForm({
           <Label htmlFor="slug">Slug (URL) *</Label>
           <Input id="slug" value={d.slug} onChange={(e) => { setSlugTouched(true); set("slug", e.target.value.toLowerCase()); }} />
           <p className="text-xs text-muted-foreground">/projects/{d.slug || "…"}</p>
-          {errors.slug && <p className="text-xs text-destructive">{errors.slug}</p>}
+          {errors["slug"] && <p className="text-xs text-destructive">{errors["slug"]}</p>}
         </div>
       </section>
 
