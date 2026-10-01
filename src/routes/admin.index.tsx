@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -26,6 +26,7 @@ function coverPath(p: Row) {
 
 function ProjectList() {
   const qc = useQueryClient();
+  const navigate = useNavigate();
   const [toDelete, setToDelete] = useState<Project | null>(null);
   const projects = useQuery({ queryKey: ["admin-projects"], queryFn: fetchProjects });
   const covers = useQuery({
