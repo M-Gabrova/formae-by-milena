@@ -64,15 +64,29 @@ function ProjectList() {
 
   const duplicate = useMutation({
     mutationFn: async (p: Project) => {
-      const slug = await uniqueSlug(`${p.slug}-copy`);
-      const { id: _id, created_at: _c, updated_at: _u, ...rest } = p;
-      const { error } = await supabase.from("projects").insert({
-        ...rest, slug, status: "draft", title_bg: `${p.title_bg} (копие)`, title_en: `${p.title_en} (copy)`,
-      });
-      if (error) throw error;
+      // Copy only real project columns — the list row also carries joined project_images.
+      const fields = {
+        title_bg: p.title_bg, title_en: p.title_en,
+        description_bg: p.description_bg, description_en: p.description_en,
+        category: p.category, area_m2: p.area_m2, location: p.location,
+        completion_year: p.completion_year, design_style: p.design_style,
+        client_tags: p.client_tags, display_order: p.display_order,
+        status: "draft",
+      };
+      for (let attempt = 0; attempt < 2; attempt++) {
+        const slug = await uniqueSlug(`${p.slug}-copy`);
+        const { data, error } = await supabase.from("projects").insert({ ...fields, slug }).select("id").single();
+        if (!error) return data.id;
+        if (error.code !== "23505" || attempt === 1) throw error;
+      }
+      throw new Error("Duplicate failed");
     },
-    onSuccess: () => { toast.success("Копиран като чернова / Duplicated as draft (images not copied)"); refresh(); },
-    onError: (e) => toast.error(friendlyError(e)),
+    onSuccess: async (newId) => {
+      toast.success("Копиран като чернова / Duplicated as draft (images not copied)");
+      await refresh();
+      navigate({ to: "/admin/projects/$id", params: { id: newId } });
+    },
+    onError: (e) => toast.error(`Копирането не успя / Duplicate failed: ${friendlyError(e)}`),
   });
 
   const remove = useMutation({
