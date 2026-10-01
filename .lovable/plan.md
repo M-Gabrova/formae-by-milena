@@ -9,8 +9,10 @@
 ## Publish flow
 Draft → hidden from grid and page returns Not found. Published → appears in grid, page loads. Back to Draft → disappears again. No admin changes needed.
 
-## Fallback while the portfolio is empty
-If no projects are published yet, the grid shows the current hand-made example cards so the homepage never looks empty. Once at least one project is published, only database projects are shown. (Tell me if you prefer an empty "coming soon" message instead.)
+## Empty portfolio
+Supabase is the only source for the portfolio. The hand-made example cards are taken out. If no projects are published, or a filter has no matches, the grid shows a calm message:
+- BG: „Скоро тук ще откриете избрани проекти на FORMAE.“
+- EN: "Selected FORMAE projects will appear here soon."
 
 ## Not changed
 Admin panel, database tables, security rules, storage privacy, logos, favicon, colors, fonts, header/footer, contact info, Netlify settings.
