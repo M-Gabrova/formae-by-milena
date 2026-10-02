@@ -34,6 +34,9 @@ type Language = "bg" | "en";
 type Copy = { bg: string; en: string };
 
 const t = (copy: Copy, language: Language) => copy[language];
+// Temporarily hidden on the public site; set to true to show again.
+const SHOW_MESSENGERS = false;
+const SHOW_INSTAGRAM = false;
 
 const services = [
   {
@@ -348,7 +351,7 @@ function Index() {
             <p className="font-display text-2xl">Milena Gabrova</p><p className="mt-1 text-xs uppercase tracking-[0.15em] text-hero-foreground/50">Interior Designer & Visualization Specialist</p>
             <div className="mt-10 divide-y divide-hero-foreground/15 border-y border-hero-foreground/15">
               <ContactLink icon={Mail} label="Email" value="formae.by.milena@gmail.com" href="mailto:formae.by.milena@gmail.com" />
-              <ContactLink icon={Instagram} label="Instagram" value="@formae.by.milena" href="https://www.instagram.com/formae.by.milena" />
+              {SHOW_INSTAGRAM && <ContactLink icon={Instagram} label="Instagram" value="@formae.by.milena" href="https://www.instagram.com/formae.by.milena" />}
               <ContactLink icon={Facebook} label="Facebook" value="FORMAE by Milena" href="https://www.facebook.com/FORMAE.by.Milena" />
             </div>
           </div>
@@ -362,10 +365,12 @@ function Index() {
         </div>
       </footer>
 
-      <div className="fixed bottom-5 right-5 z-40 flex flex-col gap-2">
-        <a href="viber://chat?number=%2B359883522459" aria-label="Contact on Viber" title="Viber" className="contact-float bg-viber"><Phone /></a>
-        <a href="https://wa.me/359883522459" target="_blank" rel="noreferrer" aria-label="Contact on WhatsApp" title="WhatsApp" className="contact-float bg-whatsapp"><MessageCircle /></a>
-      </div>
+      {SHOW_MESSENGERS && (
+        <div className="fixed bottom-5 right-5 z-40 flex flex-col gap-2">
+          <a href="viber://chat?number=%2B359883522459" aria-label="Contact on Viber" title="Viber" className="contact-float bg-viber"><Phone /></a>
+          <a href="https://wa.me/359883522459" target="_blank" rel="noreferrer" aria-label="Contact on WhatsApp" title="WhatsApp" className="contact-float bg-whatsapp"><MessageCircle /></a>
+        </div>
+      )}
     </main>
   );
 }
