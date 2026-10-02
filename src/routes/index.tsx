@@ -1,4 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useLanguage } from "@/hooks/use-language";
+import { publishedProjectsQuery, PUBLIC_CATEGORIES } from "@/lib/public-projects";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
   ArrowDown,
@@ -21,16 +24,13 @@ import {
 import { Button } from "@/components/ui/button";
 import beigeLogo from "@/assets/beige-logo.png";
 import heroImage from "@/assets/formae-hero-apartment.jpg";
-import kitchenImage from "@/assets/formae-kitchen-apartment.jpg";
-import bedroomImage from "@/assets/formae-bedroom-apartment-updated.jpg";
-import bathroomImage from "@/assets/formae-bathroom-apartment.jpg";
 import headerLogo from "@/assets/formae-beige-tight.png";
 import conceptsImage from "@/assets/service-interior-concepts.jpg";
 import planningImage from "@/assets/service-2d-planning.jpg";
 import visualizationImage from "@/assets/service-3d-visualization.jpg";
 import materialsImage from "@/assets/service-materials-style.jpg";
 
-type Language = "bg" | "en";
+type Language = import("@/hooks/use-language").Language;
 type Copy = { bg: string; en: string };
 
 const t = (copy: Copy, language: Language) => copy[language];
@@ -77,13 +77,6 @@ const services = [
     },
     image: materialsImage,
   },
-];
-
-const projects = [
-  { image: heroImage, category: "living", title: { bg: "Градски уют", en: "Urban Calm" }, location: "Sofia · 86 m²" },
-  { image: kitchenImage, category: "kitchen", title: { bg: "Кухня в салвия", en: "Sage Kitchen" }, location: "Sofia · 18 m²" },
-  { image: bedroomImage, category: "bedroom", title: { bg: "Тиха спалня", en: "Quiet Bedroom" }, location: "Sofia · 16 m²" },
-  { image: bathroomImage, category: "bathroom", title: { bg: "Топла текстура", en: "Warm Texture" }, location: "Sofia · 7 m²" },
 ];
 
 const filters = [
@@ -141,10 +134,8 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [language, setLanguage] = useLanguage();
   const { data: dbProjects, isLoading: projectsLoading } = useQuery(publishedProjectsQuery());
-  const [filterState, setFilter] = useState("all");
-  const filter = filterState;
-  const visibleProjects = (dbProjects ?? []).filter((p) => filter === "all" || PUBLIC_CATEGORIES[p.category ?? ""]?.filter === filter);
   const [filter, setFilter] = useState("all");
+  const visibleProjects = (dbProjects ?? []).filter((p) => filter === "all" || PUBLIC_CATEGORIES[p.category ?? ""]?.filter === filter);
   const [menuOpen, setMenuOpen] = useState(false);
   const [processVisible, setProcessVisible] = useState(false);
   const [activeStep, setActiveStep] = useState(-1);
