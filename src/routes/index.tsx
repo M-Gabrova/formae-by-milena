@@ -139,7 +139,11 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [language, setLanguage] = useState<Language>("bg");
+  const [language, setLanguage] = useLanguage();
+  const { data: dbProjects, isLoading: projectsLoading } = useQuery(publishedProjectsQuery());
+  const [filterState, setFilter] = useState("all");
+  const filter = filterState;
+  const visibleProjects = (dbProjects ?? []).filter((p) => filter === "all" || PUBLIC_CATEGORIES[p.category ?? ""]?.filter === filter);
   const [filter, setFilter] = useState("all");
   const [menuOpen, setMenuOpen] = useState(false);
   const [processVisible, setProcessVisible] = useState(false);
@@ -310,14 +314,20 @@ function Index() {
             {filters.map((item) => <Button key={item.key} size="sm" variant={filter === item.key ? "default" : "filter"} onClick={() => setFilter(item.key)} className="shrink-0 rounded-none">{t(item.label, language)}</Button>)}
           </div>
           <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {projects.filter((project) => filter === "all" || project.category === filter).map((project, index) => (
-              <article key={project.title.en} className={`project-card group ${index === 0 && filter === "all" ? "md:col-span-2" : ""}`}>
-                <img src={project.image} alt={t(project.title, language)} width={index === 0 ? 1920 : 1408} height={index === 0 ? 1280 : 1056} loading="lazy" className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025] ${index === 0 && filter === "all" ? "aspect-[16/9]" : "aspect-[4/3]"}`} />
-                <div className="absolute inset-0 bg-project-overlay opacity-70 transition-opacity group-hover:opacity-90" />
-                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6 text-hero-foreground sm:p-8"><div><p className="text-[10px] uppercase tracking-[0.2em] text-hero-foreground/65">{project.location}</p><h3 className="mt-2 font-display text-3xl sm:text-4xl">{t(project.title, language)}</h3></div><span className="grid size-11 place-items-center rounded-full border border-hero-foreground/40"><ArrowRight className="size-4" /></span></div>
-              </article>
-            ))}
-            {filter === "home" && <div className="col-span-full border border-dashed border-border px-6 py-20 text-center"><BedDouble className="mx-auto size-8 text-sage"/><p className="mt-5 font-display text-2xl">{language === "bg" ? "Скоро ще добавим цялостни проекти" : "Full home concepts coming soon"}</p></div>}
+            {projectsLoading && [0, 1].map((i) => <div key={i} className={`project-card animate-pulse ${i === 0 ? "md:col-span-2 aspect-[16/9]" : "aspect-[4/3]"}`} />)}
+            {visibleProjects.map((project, index) => {
+              const wide = index === 0 && filter === "all";
+              const title = language === "bg" ? project.title_bg : project.title_en;
+              const meta = [project.location, project.area_m2 ? `${project.area_m2} m²` : null].filter(Boolean).join(" · ");
+              return (
+                <Link key={project.id} to="/projects/$slug" params={{ slug: project.slug }} className={`project-card group block ${wide ? "md:col-span-2" : ""}`}>
+                  {project.cover ? <img src={project.cover} alt={title} width={wide ? 1920 : 1408} height={wide ? 1280 : 1056} loading="lazy" className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025] ${wide ? "aspect-[16/9]" : "aspect-[4/3]"}`} /> : <div className={`w-full bg-surface ${wide ? "aspect-[16/9]" : "aspect-[4/3]"}`} />}
+                  <div className="absolute inset-0 bg-project-overlay opacity-70 transition-opacity group-hover:opacity-90" />
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6 text-hero-foreground sm:p-8"><div>{meta && <p className="text-[10px] uppercase tracking-[0.2em] text-hero-foreground/65">{meta}</p>}<h3 className="mt-2 font-display text-3xl sm:text-4xl">{title}</h3></div><span className="grid size-11 place-items-center rounded-full border border-hero-foreground/40"><ArrowRight className="size-4" /></span></div>
+                </Link>
+              );
+            })}
+            {!projectsLoading && visibleProjects.length === 0 && <div className="col-span-full border border-dashed border-border px-6 py-20 text-center"><BedDouble className="mx-auto size-8 text-sage"/><p className="mt-5 font-display text-2xl">{language === "bg" ? "Скоро тук ще откриете избрани проекти на FORMAE." : "Selected FORMAE projects will appear here soon."}</p></div>}
           </div>
         </div>
       </section>
